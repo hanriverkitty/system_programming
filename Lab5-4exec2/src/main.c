@@ -23,7 +23,7 @@ int main(){
         perror("waitpid error");
         exit(1);
     }
-    if((pid==fork())<0){
+    if((pid=fork())<0){
         perror("fork2 error");
         exit(1);
     }else if(pid==0){
@@ -31,6 +31,10 @@ int main(){
             perror("execlp error");
             exit(1);
         }
+    }
+    if(waitpid(pid,NULL,0)<0){
+        perror("waitpid error");
+        exit(1);
     }
     return 0;
 }
