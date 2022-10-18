@@ -61,6 +61,7 @@ int myexeclp(const char *file, const char *args, ...) {
   strcat(file_dir, "/");
   strcat(file_dir, file);
 
+  //파일이 존재하고 읽기가 가능하면 2를받음
   if (check(pathvar[0], (char *)file) == 2) {
     //복사된 경로로 실행
     if (execve(answer, vector, pathvar) < 0) {
@@ -121,7 +122,7 @@ int check(char *pathnames, char *file) {
       }
       file_mode = file_info.st_mode;
       //읽기권한이 있는지
-      if ((file_mode & S_IXUSR) == 0) {
+      if ((file_mode & (S_IXUSR | S_IXGRP | S_IXOTH)) == 0) {
         printf("No permission\n");
         exit(-1);
       } else {
