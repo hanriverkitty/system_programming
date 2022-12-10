@@ -12,7 +12,7 @@
 
 char *get_usr_name();
 char *current_name = "";
-void erase_space(char *a);
+// void erase_space(char *a);
 char *dir;
 void history(char buf[]);
 bool is_pipe = false;
@@ -28,6 +28,8 @@ int main(void)
 
   while (1)
   {
+    int history1 = 1;
+    int cd1 = 1;
     bool back = false;
     int pid;
     leng = 0;
@@ -155,6 +157,23 @@ int main(void)
         strcat(buf1[leng], "!");
         leng++;
         break;
+      case '2':
+        printf("2찾았다");
+
+        if (a[i + 1] == '>')
+        {
+          if (strcmp(buf1[leng], "") != 0)
+            leng++;
+          printf("2>명령어");
+          strcat(buf1[leng], "2>");
+          leng++;
+          i++;
+        }
+        else
+        {
+          strncat(buf1[leng], &buf[i], 1);
+        }
+        break;
       default:
         strncat(buf1[leng], &buf[i], 1);
         break;
@@ -181,7 +200,7 @@ int main(void)
 
         if (strcmp(buf1[g], ">") == 0)
         {
-          if ((fd = open(buf1[g + 1], O_CREAT | O_RDWR | O_TRUNC, 0666)) < 0)
+          if ((fd = open(buf1[g + 1], O_CREAT | O_RDWR, 0666)) < 0)
           {
             perror("open error");
             his_exe = true;
@@ -202,12 +221,26 @@ int main(void)
           close(fd);
           g += 2;
         }
+        else if (strcmp(buf1[g], ">|") == 0)
+        {
+          if ((fd = open(buf1[g + 1], O_CREAT | O_RDWR | O_TRUNC, 0666)) < 0)
+          {
+            perror("open error");
+            exit(1);
+          }
+          dup2(fd, 1);
+          close(fd);
+          g += 2;
+        }
+        /* history */
         else if (strcmp(buf1[g], "history") == 0)
         {
-          printf("%s\n", buf1[g]);
+          // printf("%s\n", buf1[g]);
           history(buf1[g]);
+          history1 = 0;
           g++;
         }
+        /* ! */
         else if (strcmp(buf1[g], "!") == 0)
         {
           // printf("%s\n", buf1[g + 1]);
@@ -237,9 +270,36 @@ int main(void)
             break;
           }
         }
+        /* cd */
         else if (strcmp(buf1[g], "cd") == 0)
         {
           chdir(buf1[g + 1]);
+          g += 2;
+          cd1 = 0;
+        }
+
+        /* < */
+        else if (strcmp(buf1[g], "<") == 0)
+        {
+          if ((fd = open(buf1[g + 1], O_RDWR, 0666)) < 0)
+          {
+            perror("open error");
+            exit(1);
+          }
+          dup2(fd, 0);
+          close(fd);
+          g += 2;
+        }
+        else if (strcmp(buf1[g], "2>") == 0)
+        {
+          printf("오류\n");
+          if ((fd = open(buf1[g + 1], O_CREAT | O_RDWR | O_APPEND, 0666)) < 0)
+          {
+            perror("open error");
+            exit(1);
+          }
+          dup2(fd, 2);
+          close(fd);
           g += 2;
         }
         else
@@ -260,11 +320,11 @@ int main(void)
           g++;
         }
       }
-      if (his_exe == 0)
+      if (his_exe == 0 || history1 == 0 || cd1 == 0)
       {
         break;
       }
-      // printf("%s\t\t%s\n", first_exe, *exe);
+      printf("%s\t\t%s\n", first_exe, *exe);
       execvp(first_exe, exe);
       break;
     default:
