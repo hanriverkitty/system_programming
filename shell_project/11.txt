@@ -1,5 +1,0 @@
-11.txt
-example.c
-history
-main
-main.c

@@ -1,7 +1,0 @@
-ls
-11.txt
-123.txt
-example.c
-history
-main
-main.c

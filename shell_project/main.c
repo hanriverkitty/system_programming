@@ -19,12 +19,12 @@ bool is_pipe = false;
 char *buf1[20];
 int leng = 1;
 int g, fd;
-int his_exe = 1;
 char num[255];
 
 int main(void)
 {
   char *user = get_usr_name();
+  int his_exe = 1;
 
   while (1)
   {
@@ -34,8 +34,15 @@ int main(void)
     char buf[255];
     int m = 0;
     printf("%s:%s$ ", user, getcwd(NULL, 0));
-    printf("%s", num);
-    fgets(buf, 255, stdin);
+    // printf("%s", num);
+    if (his_exe == 1)
+    {
+      fgets(buf, 255, stdin);
+    }
+    else
+    {
+      his_exe = 1;
+    }
 
     /* history 파일에 명령어 추가 */
     if (buf[0] != '\n')
@@ -201,6 +208,35 @@ int main(void)
           history(buf1[g]);
           g++;
         }
+        else if (strcmp(buf1[g], "!") == 0)
+        {
+          // printf("%s\n", buf1[g + 1]);
+          char line[255];
+          char *pLine;
+          int c_line = 1;
+          FILE *in = fopen("history", "r");
+          while (!feof(in))
+          {
+
+            pLine = fgets(line, 255, in);
+            char c_buf[10];
+            sprintf(c_buf, "%d", c_line);
+            if (strcmp(buf1[g + 1], c_buf) == 0)
+            {
+              strcpy(buf, pLine);
+              // printf("%s", buf);
+              his_exe = 0;
+              break;
+            }
+            c_line++;
+          }
+          fclose(in);
+          g += 2;
+          if (his_exe == 0)
+          {
+            break;
+          }
+        }
         else
         {
           if (index == 0)
@@ -219,7 +255,11 @@ int main(void)
           g++;
         }
       }
-      printf("%s\t\t%s\n", first_exe, *exe);
+      if (his_exe == 0)
+      {
+        break;
+      }
+      // printf("%s\t\t%s\n", first_exe, *exe);
       execvp(first_exe, exe);
       break;
     default:
