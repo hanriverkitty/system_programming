@@ -197,6 +197,7 @@ int main(void)
         }
         else if (strcmp(buf1[g], "history") == 0)
         {
+          printf("%s\n", buf1[g]);
           history(buf1[g]);
           g++;
         }
@@ -218,7 +219,6 @@ int main(void)
           g++;
         }
       }
-      printf("%sdwawdaw\n", first_exe);
       printf("%s\t\t%s\n", first_exe, *exe);
       execvp(first_exe, exe);
       break;
