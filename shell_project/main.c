@@ -237,6 +237,11 @@ int main(void)
             break;
           }
         }
+        else if (strcmp(buf1[g], "cd") == 0)
+        {
+          chdir(buf1[g + 1]);
+          g += 2;
+        }
         else
         {
           if (index == 0)
@@ -342,7 +347,7 @@ void history(char buf[])
 //   *a = 0;
 // }
 
-/* 토근화 실패 */
+/* 토큰화 실패 */
 // for(int i;i<15;i++){
 //   printf("%s\n",buf1[i]);
 // }
