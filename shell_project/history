@@ -56,3 +56,170 @@ ls > 12331.txt
 ls > 12331.txt
 ls > 123123.txt
 ls -al /bb/bbbb 2> err1.txt
+cat < history
+jobs
+job
+ls
+sleep 100
+sleep 100 &
+(sleep)&
+jobs
+sleep 100 &
+sleep; echo done &
+jobs
+sleep 100
+sleep 100 &
+sleep 100 &
+sleep 100 &
+jobs
+sleep 5 &
+jobs
+sleep 3
+sleep 5 &
+sleep 5
+sleep 5 &
+sleep 5 &
+jobs
+ls -l
+ls -l > 123.txt
+ls -l > 123.txt
+ls -al > 123.txt
+ls > 123.txt
+sleep 5
+sleep 5 
+ls 
+(sleep 100)&
+(sleep 10)&
+ls  
+ls  
+ls  
+ls  
+sleep 5 &
+jobs
+ls -al > 123.txt
+ls  >  123.txt
+aa aaa 
+aa aa   a
+aa aaa  aaaa
+sleep 5 &
+sleep 5 &
+sleep5&
+jobs
+sleep 5 &
+jobs
+sleep 5
+sleep 5 &
+sleep 5 &
+kill
+kill(1
+jobs
+sleep 5 &
+sleep 5 &
+sleep 5 
+sleep 5&
+sleep 5 &
+sleep 6 &
+kill(1)
+sleep 5 &
+ls &
+ls &
+kill(1)
+sleep 5 &
+sleep 7 &
+sllep 5 &
+s
+s
+s
+s
+s
+s
+s
+s
+s
+s
+s
+a
+sleep 5 &
+kill(1)
+ls -al > 123.txt
+a
+a5
+sleep 5
+ls -al
+sleep 5
+sleep 1
+sleep 2 &
+sleep 5
+sleep 5 &
+sleep 5
+ls  
+sleep 5 
+sleep 5 &
+sleep 5 &
+kill
+kill(1)
+kill(1)
+sleep 5 
+sleep 5 a
+ls  
+ls
+ls 
+ls  
+ls 
+sleep 5 &
+jobs
+ls -al
+kill(1)
+ls -al
+ls -al
+ls -al
+ls  
+ls a &
+ls a a
+ls a &
+kill(1)
+ls a
+ls a a
+printf a a
+awddaw awd aa
+ada adda  
+adfa aa  a
+sleep 5 &
+ls  a  a
+ls  a  a
+lss &
+sleep 5 &
+sleep 5 &
+sleep 5 &
+sleep 5 &
+sleep 5 &
+sleep 5 &
+sleep 5 &
+ls -al  
+ls -al
+ls -al &
+ls -al &
+ls  -al
+ls -al 
+ls -al
+ls -al 
+ls -al &
+ls -al &
+ls -al &
+sleep 5 &
+jobs
+ls &
+;s &
+ls &
+ls &
+ls -al &
+sleep 5 &
+jobs
+sleep 5 &
+sleep 5 &
+ls
+sleep 5 &
+sleep 5 &
+ls
+ls
+ls

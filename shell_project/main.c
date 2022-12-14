@@ -16,7 +16,6 @@ char *current_name = "";
 char *dir;
 void history(char buf[]);
 bool is_pipe = false;
-char *buf1[20];
 int leng = 1;
 int g, fd;
 char num[255];
@@ -25,15 +24,17 @@ int main(void)
 {
   char *user = get_usr_name();
   int his_exe = 1;
+  int back = 0;
 
   while (1)
   {
+    char *buf1[20];
     int history1 = 1;
     int cd1 = 1;
-    bool back = false;
     int pid;
     leng = 0;
     char buf[255];
+    buf[0] = '\0';
     int m = 0;
     printf("%s:%s$ ", user, getcwd(NULL, 0));
     // printf("%s", num);
@@ -97,7 +98,6 @@ int main(void)
       buf1[i] = malloc(sizeof(char) * 20);
       strcpy(buf1[i], "");
     }
-
     for (int i = 0; i < strlen(a); i++)
     {
       switch (a[i])
@@ -143,7 +143,7 @@ int main(void)
           leng++;
         strcat(buf1[leng], "&");
         leng++;
-        back = true;
+        back = 1;
         break;
       case ';':
         if (strcmp(buf1[leng], "") != 0)
@@ -158,8 +158,6 @@ int main(void)
         leng++;
         break;
       case '2':
-        printf("2찾았다");
-
         if (a[i + 1] == '>')
         {
           if (strcmp(buf1[leng], "") != 0)
@@ -192,12 +190,11 @@ int main(void)
       char *exe[20];
       for (int i = 0; i < 20; i++)
       {
-        exe[i] = NULL;
+        exe[i] = '\0';
       }
-      char first_exe[255];
+      char first_exe[10];
       while (g <= leng)
       {
-
         if (strcmp(buf1[g], ">") == 0)
         {
           if ((fd = open(buf1[g + 1], O_CREAT | O_RDWR, 0666)) < 0)
@@ -290,6 +287,7 @@ int main(void)
           close(fd);
           g += 2;
         }
+        /* 2> */
         else if (strcmp(buf1[g], "2>") == 0)
         {
           printf("오류\n");
@@ -302,6 +300,11 @@ int main(void)
           close(fd);
           g += 2;
         }
+        else if (strcmp(buf1[g], "&") == 0)
+        {
+          back = 1;
+          break;
+        }
         else
         {
           if (index == 0)
@@ -313,6 +316,7 @@ int main(void)
           }
           else
           {
+
             // strcpy(exe[index], buf1[g]);
             exe[index] = buf1[g];
             index++;
@@ -324,19 +328,28 @@ int main(void)
       {
         break;
       }
-      printf("%s\t\t%s\n", first_exe, *exe);
+      // printf("%s\t\t%s\n", first_exe, exe[0]);
+      // printf("%s\t\t%s\n", first_exe, exe[1]);
+      // printf("%s\t\t%s\n", first_exe, exe[2]);
+
       execvp(first_exe, exe);
       break;
     default:
       if (back)
       {
-        back = false;
         printf("%d\n", getpid());
+        strcpy(buf, "");
+        strcpy(a, "");
+        strcpy(first_exe, "");
+        back = 0;
+        fflush(stdout);
+        break;
       }
 
       else
       {
         wait(NULL);
+        break;
         // printf("front\n");
       }
     }
@@ -393,19 +406,19 @@ void history(char buf[])
   }
 }
 /* 공백제거함수 */
-// void erase_space(char *buf) {
-//   char *a = buf;
-//   int b = 0;
+//  void erase_space(char *buf) {
+//    char *a = buf;
+//    int b = 0;
 
-//   while (*buf != 0) {
-//     if (*buf != ' ') {
-//       *a = *buf;
-//       a++;
-//     }
-//     buf++;
-//   }
-//   *a = 0;
-// }
+//    while (*buf != 0) {
+//      if (*buf != ' ') {
+//        *a = *buf;
+//        a++;
+//      }
+//      buf++;
+//    }
+//    *a = 0;
+//  }
 
 /* 토큰화 실패 */
 // for(int i;i<15;i++){
