@@ -1,0 +1,18 @@
+123.txt
+12312.txt
+123123.txt
+example.c
+history
+main
+main.c
+': No such file or directory
+123.txt
+1231.txt
+12312.txt
+123123.txt
+example.c
+history
+main
+main.c
+ls: cannot access 'aaa': No such file or directory
+ls: cannot access 'aaa': No such file or directory

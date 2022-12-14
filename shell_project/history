@@ -1,225 +1,36 @@
-cd ..
-cd ..
-cd
-history
-cd
-history
-history
-history
-history
-history
-history
-wc < history
-cd ..
-wc < 123.txt
-hello
-zello
-zwc < 123.txt
-hello
-zello
-zls > 123.txt
-ls > 123.txtls > 123.txls > 123.tls > 123.ls > 123ls > 12ls > 1ls > ls >ls lslls >> 123.txt
 ls > 123.txt
-dadls
 ls
-ls -al
-ls
-ls
-ls
-ls
-ls
-ls
-ㅣㄴ
-ls
-ls
-ls
-ls
-wc < history
-wc < 123.txt
-ls -l /bon/usr 2> err.txt
-ls -l /bon/usr 2> err.txt
-ls -l /bon/usr 2> err.txt
-ls -l /bon/usr 2> err.txt
-ls -l /bon/usr 2> err.txt
-ls > list.txt
-ls -al >
-ls -al >| list.txt
+date
+ls aa 2> 123.txt
+ls aa 2> 12312.txt
+ls aa 2> 123123.txt
+history
+!3
+date
+history
+!9
+date
 ls > 123.txt
-ls > 123.txt
-ls -al > 1234.txt
-ls -al > 122.txt
-ls >| 2.txt
-ls -al > 132.txt
-ls
 ls > 1231.txt
-ls > 12331.txt
-ls > 12331.txt
-ls > 123123.txt
-ls -al /bb/bbbb 2> err1.txt
-cat < history
-jobs
-job
-ls
-sleep 100
-sleep 100 &
-(sleep)&
-jobs
-sleep 100 &
-sleep; echo done &
-jobs
-sleep 100
-sleep 100 &
-sleep 100 &
-sleep 100 &
-jobs
-sleep 5 &
-jobs
-sleep 3
-sleep 5 &
-sleep 5
-sleep 5 &
-sleep 5 &
-jobs
-ls -l
-ls -l > 123.txt
-ls -l > 123.txt
-ls -al > 123.txt
-ls > 123.txt
-sleep 5
-sleep 5 
-ls 
-(sleep 100)&
-(sleep 10)&
-ls  
-ls  
-ls  
-ls  
-sleep 5 &
-jobs
-ls -al > 123.txt
-ls  >  123.txt
-aa aaa 
-aa aa   a
-aa aaa  aaaa
-sleep 5 &
-sleep 5 &
-sleep5&
-jobs
-sleep 5 &
-jobs
-sleep 5
-sleep 5 &
-sleep 5 &
-kill
-kill(1
-jobs
-sleep 5 &
-sleep 5 &
-sleep 5 
-sleep 5&
-sleep 5 &
-sleep 6 &
-kill(1)
-sleep 5 &
-ls &
-ls &
-kill(1)
-sleep 5 &
-sleep 7 &
-sllep 5 &
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-a
-sleep 5 &
-kill(1)
-ls -al > 123.txt
-a
-a5
-sleep 5
-ls -al
-sleep 5
-sleep 1
-sleep 2 &
-sleep 5
-sleep 5 &
-sleep 5
-ls  
-sleep 5 
-sleep 5 &
-sleep 5 &
-kill
-kill(1)
-kill(1)
-sleep 5 
-sleep 5 a
-ls  
-ls
-ls 
-ls  
-ls 
-sleep 5 &
-jobs
-ls -al
-kill(1)
-ls -al
-ls -al
-ls -al
-ls  
-ls a &
-ls a a
-ls a &
-kill(1)
-ls a
-ls a a
-printf a a
-awddaw awd aa
-ada adda  
-adfa aa  a
-sleep 5 &
-ls  a  a
-ls  a  a
-lss &
-sleep 5 &
-sleep 5 &
-sleep 5 &
-sleep 5 &
-sleep 5 &
-sleep 5 &
-sleep 5 &
-ls -al  
-ls -al
-ls -al &
-ls -al &
-ls  -al
-ls -al 
-ls -al
-ls -al 
-ls -al &
-ls -al &
-ls -al &
-sleep 5 &
-jobs
-ls &
-;s &
-ls &
-ls &
-ls -al &
-sleep 5 &
-jobs
-sleep 5 &
-sleep 5 &
-ls
-sleep 5 &
-sleep 5 &
+ls >> 123.txt
+ls aaa 2> 123.txt
+histor
+history
+!16
+ls aaa 2> 123.txt
 ls
 ls
+ls
+ls
+ls; date
+ls; date
+ls; date
+ls; ls; ls
+ls; date
+ls;
+sl > aaa; aaa > aaa
+aa > aaaaa; adw
+ls > llll
+ls > aaa; wa
+ls > 1231.txt
 ls

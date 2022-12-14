@@ -17,18 +17,18 @@ char *dir;
 void history(char buf[]);
 bool is_pipe = false;
 int leng = 1;
-int g, fd;
+int fd;
 char num[255];
 
 int main(void)
 {
+  int g;
   char *user = get_usr_name();
   int his_exe = 1;
   int back = 0;
 
   while (1)
   {
-    printf("\n\n%d 메인문\n\n", back);
     back = 0;
     char *buf1[20];
     int history1 = 1;
@@ -36,16 +36,15 @@ int main(void)
     int pid;
     leng = 0;
     char buf[255];
-    buf[0] = '\0';
-    int m = 0;
-    printf("%s:%s$ ", user, getcwd(NULL, 0));
     // printf("%s", num);
     if (his_exe == 1)
     {
+      printf("%s:%s$ ", user, getcwd(NULL, 0));
       fgets(buf, 255, stdin);
     }
     else
     {
+
       his_exe = 1;
     }
 
@@ -74,26 +73,26 @@ int main(void)
     char a[255];
     strcpy(a, buf);
 
-    if (strcmp(buf, "history") == 0)
-    {
-      int his_fd1;
-      int n;
-      int i = 1;
-      char read_buf[255];
+    // if (strcmp(buf, "history") == 0)
+    // {
+    //   int his_fd1;
+    //   int n;
+    //   int i = 1;
+    //   char read_buf[255];
 
-      his_fd1 = open("history", O_RDONLY);
-      while (n = read(his_fd1, read_buf, 255) > 0)
-      {
-        char *ptr = strtok(read_buf, "\n");
-        while (ptr != NULL)
-        {
-          printf("\t\t%d\t%s\n", i, ptr);
-          ptr = strtok(NULL, "\n");
-          i++;
-        }
-      }
-      close(his_fd1);
-    }
+    //   his_fd1 = open("history", O_RDONLY);
+    //   while (n = read(his_fd1, read_buf, 255) > 0)
+    //   {
+    //     char *ptr = strtok(read_buf, "\n");
+    //     while (ptr != NULL)
+    //     {
+    //       printf("\t\t%d\t%s\n", i, ptr);
+    //       ptr = strtok(NULL, "\n");
+    //       i++;
+    //     }
+    //   }
+    //   close(his_fd1);
+    // }
 
     for (int i = 0; i < 20; i++)
     {
@@ -164,7 +163,6 @@ int main(void)
         {
           if (strcmp(buf1[leng], "") != 0)
             leng++;
-          printf("2>명령어");
           strcat(buf1[leng], "2>");
           leng++;
           i++;
@@ -179,179 +177,195 @@ int main(void)
         break;
       }
     }
-    /* fork 및 명령어 실행*/
-    switch (pid = fork())
+    g = 0;
+    int temp;
+    printf("%s\n", buf1[0]);
+    printf("%s\n", buf1[1]);
+    for (int i = 0; i < 3; i++)
     {
-    case -1:
-      perror("fork error");
-      break;
-      exit(1);
-    case 0:
-      g = 0;
-      int index = 0;
-      char *exe[20];
-      for (int i = 0; i < 20; i++)
-      {
-        exe[i] = '\0';
-      }
-      char first_exe[10];
-      while (g <= leng)
-      {
-        if (strcmp(buf1[g], ">") == 0)
-        {
-          if ((fd = open(buf1[g + 1], O_CREAT | O_RDWR, 0666)) < 0)
-          {
-            perror("open error");
-            his_exe = true;
-            exit(1);
-          }
-          dup2(fd, 1);
-          close(fd);
-          g += 2;
-        }
-        else if (strcmp(buf1[g], ">>") == 0)
-        {
-          if ((fd = open(buf1[g + 1], O_CREAT | O_RDWR | O_APPEND, 0666)) < 0)
-          {
-            perror("open error");
-            exit(1);
-          }
-          dup2(fd, 1);
-          close(fd);
-          g += 2;
-        }
-        else if (strcmp(buf1[g], ">|") == 0)
-        {
-          if ((fd = open(buf1[g + 1], O_CREAT | O_RDWR | O_TRUNC, 0666)) < 0)
-          {
-            perror("open error");
-            exit(1);
-          }
-          dup2(fd, 1);
-          close(fd);
-          g += 2;
-        }
-        /* history */
-        else if (strcmp(buf1[g], "history") == 0)
-        {
-          // printf("%s\n", buf1[g]);
-          history(buf1[g]);
-          history1 = 0;
-          g++;
-        }
-        /* ! */
-        else if (strcmp(buf1[g], "!") == 0)
-        {
-          // printf("%s\n", buf1[g + 1]);
-          char line[255];
-          char *pLine;
-          int c_line = 1;
-          FILE *in = fopen("history", "r");
-          while (!feof(in))
-          {
 
-            pLine = fgets(line, 255, in);
-            char c_buf[10];
-            sprintf(c_buf, "%d", c_line);
-            if (strcmp(buf1[g + 1], c_buf) == 0)
-            {
-              strcpy(buf, pLine);
-              // printf("%s", buf);
-              his_exe = 0;
-              break;
-            }
-            c_line++;
-          }
-          fclose(in);
-          g += 2;
-          if (his_exe == 0)
+      printf("%d\n", temp);
+      printf("%d\t\ti\n", i);
+      /* fork 및 명령어 실행*/
+      switch (pid = fork())
+      {
+      case -1:
+        perror("fork error");
+        break;
+        exit(1);
+      case 0:
+      {
+
+        int index = 0;
+        char *exe[20];
+        for (int i = 0; i < 20; i++)
+        {
+          exe[i] = '\0';
+        }
+        char first_exe[10];
+        while (g <= leng)
+        {
+          if (strcmp(buf1[g], ">") == 0)
           {
+            if ((fd = open(buf1[g + 1], O_CREAT | O_RDWR, 0666)) < 0)
+            {
+              perror("open error");
+              his_exe = true;
+              exit(1);
+            }
+            dup2(fd, 1);
+            close(fd);
+            g += 2;
+          }
+          else if (strcmp(buf1[g], ">>") == 0)
+          {
+            if ((fd = open(buf1[g + 1], O_CREAT | O_RDWR | O_APPEND, 0666)) < 0)
+            {
+              perror("open error");
+              exit(1);
+            }
+            dup2(fd, 1);
+            close(fd);
+            g += 2;
+          }
+          else if (strcmp(buf1[g], ">|") == 0)
+          {
+            if ((fd = open(buf1[g + 1], O_CREAT | O_RDWR | O_TRUNC, 0666)) < 0)
+            {
+              perror("open error");
+              exit(1);
+            }
+            dup2(fd, 1);
+            close(fd);
+            g += 2;
+          }
+          /* history */
+          else if (strcmp(buf1[g], "history") == 0)
+          {
+            // printf("%s\n", buf1[g]);
+            history(buf1[g]);
+            history1 = 0;
+            g++;
+          }
+          else if (strcmp(buf1[g], ";") == 0)
+          {
+            printf("semicolon\n");
+            g++;
+            temp = g;
             break;
           }
-        }
-        /* cd */
-        else if (strcmp(buf1[g], "cd") == 0)
-        {
-          chdir(buf1[g + 1]);
-          g += 2;
-          cd1 = 0;
-        }
+          /* ! */
+          else if (strcmp(buf1[g], "!") == 0)
+          {
+            // printf("%s\n", buf1[g + 1]);
+            char line[255];
+            char *pLine;
+            int c_line = 1;
+            FILE *in = fopen("history", "r");
+            while (!feof(in))
+            {
 
-        /* < */
-        else if (strcmp(buf1[g], "<") == 0)
-        {
-          if ((fd = open(buf1[g + 1], O_RDWR, 0666)) < 0)
-          {
-            perror("open error");
-            exit(1);
+              pLine = fgets(line, 255, in);
+              char c_buf[10];
+              sprintf(c_buf, "%d", c_line);
+              if (strcmp(buf1[g + 1], c_buf) == 0)
+              {
+                strcpy(buf, pLine);
+                // printf("%s", buf);
+                his_exe = 0;
+                break;
+              }
+              c_line++;
+            }
+            fclose(in);
+            g += 2;
+            if (his_exe == 0)
+            {
+              break;
+            }
           }
-          dup2(fd, 0);
-          close(fd);
-          g += 2;
-        }
-        /* 2> */
-        else if (strcmp(buf1[g], "2>") == 0)
-        {
-          printf("오류\n");
-          if ((fd = open(buf1[g + 1], O_CREAT | O_RDWR | O_APPEND, 0666)) < 0)
+          /* cd */
+          else if (strcmp(buf1[g], "cd") == 0)
           {
-            perror("open error");
-            exit(1);
+            chdir(buf1[g + 1]);
+            g += 2;
+            cd1 = 0;
           }
-          dup2(fd, 2);
-          close(fd);
-          g += 2;
-        }
-        else if (strcmp(buf1[g], "&") == 0)
-        {
-          back = 1;
-          break;
-        }
-        else
-        {
-          if (index == 0)
+
+          /* < */
+          else if (strcmp(buf1[g], "<") == 0)
           {
-            strcpy(first_exe, buf1[g]);
-            // strcat(exe[index], buf1[g]);
-            exe[index] = buf1[g];
-            index++;
+            if ((fd = open(buf1[g + 1], O_RDWR, 0666)) < 0)
+            {
+              perror("open error");
+              exit(1);
+            }
+            dup2(fd, 0);
+            close(fd);
+            g += 2;
+          }
+          /* 2> */
+          else if (strcmp(buf1[g], "2>") == 0)
+          {
+            if ((fd = open(buf1[g + 1], O_CREAT | O_RDWR | O_APPEND, 0666)) < 0)
+            {
+              perror("open error");
+              exit(1);
+            }
+            dup2(fd, 2);
+            close(fd);
+            g += 2;
+          }
+          else if (strcmp(buf1[g], "&") == 0)
+          {
+            back = 1;
+            break;
           }
           else
           {
+            if (index == 0)
+            {
+              strcpy(first_exe, buf1[g]);
+              // strcat(exe[index], buf1[g]);
+              exe[index] = buf1[g];
+              index++;
+            }
+            else
+            {
 
-            // strcpy(exe[index], buf1[g]);
-            exe[index] = buf1[g];
-            index++;
+              // strcpy(exe[index], buf1[g]);
+              exe[index] = buf1[g];
+              index++;
+            }
+            g++;
           }
-          g++;
         }
-      }
-      if (his_exe == 0 || history1 == 0 || cd1 == 0)
-      {
+        if (his_exe == 0 || history1 == 0 || cd1 == 0)
+        {
+          break;
+        }
+        // printf("%s\t\t%s\n", first_exe, exe[0]);
+        // printf("%s\t\t%s\n", first_exe, exe[1]);
+        // printf("%s\t\t%s\n", first_exe, exe[2]);
+        execvp(first_exe, exe);
         break;
       }
-      // printf("%s\t\t%s\n", first_exe, exe[0]);
-      // printf("%s\t\t%s\n", first_exe, exe[1]);
-      // printf("%s\t\t%s\n", first_exe, exe[2]);
-      execvp(first_exe, exe);
+      default:
+        if (back)
+        {
 
-      break;
-    default:
-      if (back)
-      {
+          printf("%d\n", getpid());
+          back = 0;
+          break;
+        }
 
-        printf("%d\n", getpid());
-        back = 0;
-        break;
-      }
-
-      else
-      {
-        int st, st1;
-        st1 = waitpid(pid, &st, 0);
-        printf("\n\n%d\n\n", back);
-        break;
-        // printf("front\n");
+        else
+        {
+          int st, st1;
+          st1 = waitpid(pid, &st, 0);
+          break;
+          // printf("front\n");
+        }
       }
     }
   }
