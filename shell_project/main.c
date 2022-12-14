@@ -28,6 +28,8 @@ int main(void)
 
   while (1)
   {
+    printf("\n\n%d 메인문\n\n", back);
+    back = 0;
     char *buf1[20];
     int history1 = 1;
     int cd1 = 1;
@@ -331,24 +333,23 @@ int main(void)
       // printf("%s\t\t%s\n", first_exe, exe[0]);
       // printf("%s\t\t%s\n", first_exe, exe[1]);
       // printf("%s\t\t%s\n", first_exe, exe[2]);
-
       execvp(first_exe, exe);
+
       break;
     default:
       if (back)
       {
+
         printf("%d\n", getpid());
-        strcpy(buf, "");
-        strcpy(a, "");
-        strcpy(first_exe, "");
         back = 0;
-        fflush(stdout);
         break;
       }
 
       else
       {
-        wait(NULL);
+        int st, st1;
+        st1 = waitpid(pid, &st, 0);
+        printf("\n\n%d\n\n", back);
         break;
         // printf("front\n");
       }
