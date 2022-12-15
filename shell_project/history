@@ -5,3 +5,7 @@ ls
 history
 !4
 ls
+ls
+ls | ls
+ls |
+ls
