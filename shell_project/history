@@ -1,23 +1,7 @@
 ls
 history
-!1
+history
 ls
-ls; date
-ls; date
-ls; date; pwd
 history
 !4
 ls
-ls; date;
-ls; date
-ls; date; pwd
-ls; date; pwd
-ls
-date
-ls; date
-ls; date; pwd
-pwd; date
-ls; date; date
-ls
-ls; date
-ls; date; pwd

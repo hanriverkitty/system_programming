@@ -199,7 +199,6 @@ int main(void)
     {
       for (int i = 0; i <= cn_semi; i++)
       {
-        temp++;
         int index = 0;
         char *exe[20];
         for (int i = 0; i < 20; i++)
@@ -255,6 +254,7 @@ int main(void)
           {
             printf("semicolon\n");
             g++;
+            temp++;
             break;
           }
           /* ! */
@@ -350,13 +350,21 @@ int main(void)
         // printf("%s\t\t%s\n", first_exe, exe[0]);
         // printf("%s\t\t%s\n", first_exe, exe[1]);
         // printf("%s\t\t%s\n", first_exe, exe[2]);
-        switch (fork())
+        if (temp > 0)
         {
-        case 0:
-          execvp(first_exe, exe);
+          switch (fork())
+          {
+          case 0:
+            execvp(first_exe, exe);
 
-        default:
-          wait(NULL);
+          default:
+            wait(NULL);
+            temp = 0;
+          }
+        }
+        else
+        {
+          execvp(first_exe, exe);
         }
         // execvp(first_exe, exe);
         if (temp == cn_semi)
@@ -365,6 +373,7 @@ int main(void)
         }
       }
       break;
+      exit(1);
     }
     default:
       if (back)
