@@ -15,7 +15,7 @@ char *current_name = "";
 // void erase_space(char *a);
 char *dir;
 void history(char buf[]);
-bool is_pipe = false;
+int is_pipe = 0;
 int leng = 1;
 int fd;
 char num[255];
@@ -37,7 +37,7 @@ int main(void)
     int pid;
     leng = 0;
     char buf[255];
-    is_pipe = false;
+    is_pipe = 0;
     int p_index;
     // printf("%s", num);
     if (his_exe == 1)
@@ -132,7 +132,7 @@ int main(void)
             leng++;
           strcat(buf1[leng], "|");
           leng++;
-          is_pipe = true;
+          is_pipe = 1;
           break;
         }
         break;
@@ -192,12 +192,91 @@ int main(void)
     // printf("%d\t\ti\n", i);
     switch (is_pipe)
     {
-    case true:
-      printf("1\n");
-      break;
-    default:
-      printf("2\n");
+    case 1:
+    {
 
+      int p_fd[2];
+      pipe(p_fd);
+      printf("1\n");
+      int index = 0;
+      int s_index = 0;
+      p_index = 0;
+      char *exe[10];
+      char *s_exe[10];
+      for (int i = 0; i < 10; i++)
+      {
+        exe[i] = '\0';
+        s_exe[i] = '\0';
+      }
+      char first_exe[10];
+      char second_exe[10];
+      int p_cmd_c = 0;
+      /* 명령문 나누기 */
+      while (g <= leng)
+      {
+        if (strcmp(buf1[g], "|") == 0)
+        {
+          p_cmd_c = 1;
+          g++;
+        }
+        else
+        {
+          if (p_cmd_c == 0)
+          {
+            if (index == 0)
+            {
+              strcpy(first_exe, buf1[g]);
+              exe[index] = buf1[g];
+              index++;
+            }
+            else
+            {
+              exe[index] = buf1[g];
+              index++;
+            }
+          }
+          else
+          {
+            if (s_index == 0)
+            {
+              strcpy(second_exe, buf1[g]);
+              s_exe[s_index] = buf1[g];
+              s_index++;
+            }
+            else
+            {
+              s_exe[index] = buf1[g];
+              s_index++;
+            }
+          }
+          g++;
+        }
+      }
+      printf("first\t%s\t%s\n", first_exe, exe[0]);
+      printf("second\t%s\t%s\n", second_exe, s_exe[0]);
+      if (fork() == 0)
+      {
+        dup2(p_fd[1], 1);
+        close(p_fd[0]);
+        close(p_fd[1]);
+        execvp(first_exe, exe);
+      }
+      if (fork() == 0)
+      {
+        dup2(p_fd[0], 0);
+        close(p_fd[0]);
+        close(p_fd[1]);
+        execvp(second_exe, s_exe);
+      }
+      close(p_fd[0]);
+      close(p_fd[1]);
+      wait(NULL);
+      wait(NULL);
+
+      break;
+    }
+    /* 파이프가 아닐때 */
+    default:
       /* fork 및 명령어 실행*/
       switch (pid = fork())
       {
