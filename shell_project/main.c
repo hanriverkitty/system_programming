@@ -29,6 +29,7 @@ int main(void)
 
   while (1)
   {
+    int cn_semi = 0;
     back = 0;
     char *buf1[20];
     int history1 = 1;
@@ -151,6 +152,7 @@ int main(void)
           leng++;
         strcat(buf1[leng], ";");
         leng++;
+        cn_semi++;
         break;
       case '!':
         if (strcmp(buf1[leng], "") != 0)
@@ -179,23 +181,25 @@ int main(void)
     }
     g = 0;
     int temp;
-    printf("%s\n", buf1[0]);
-    printf("%s\n", buf1[1]);
-    for (int i = 0; i < 3; i++)
+    // printf("%s\n", buf1[0]);
+    // printf("%s\n", buf1[1]);
+    // for (int i = 0; i < 3; i++)
+    // {
+
+    // printf("%d\n", temp);
+    // printf("%d\t\ti\n", i);
+    /* fork 및 명령어 실행*/
+    switch (pid = fork())
     {
-
-      printf("%d\n", temp);
-      printf("%d\t\ti\n", i);
-      /* fork 및 명령어 실행*/
-      switch (pid = fork())
+    case -1:
+      perror("fork error");
+      break;
+      exit(1);
+    case 0:
+    {
+      for (int i = 0; i <= cn_semi; i++)
       {
-      case -1:
-        perror("fork error");
-        break;
-        exit(1);
-      case 0:
-      {
-
+        temp++;
         int index = 0;
         char *exe[20];
         for (int i = 0; i < 20; i++)
@@ -251,7 +255,6 @@ int main(void)
           {
             printf("semicolon\n");
             g++;
-            temp = g;
             break;
           }
           /* ! */
@@ -347,27 +350,40 @@ int main(void)
         // printf("%s\t\t%s\n", first_exe, exe[0]);
         // printf("%s\t\t%s\n", first_exe, exe[1]);
         // printf("%s\t\t%s\n", first_exe, exe[2]);
-        execvp(first_exe, exe);
+        switch (fork())
+        {
+        case 0:
+          execvp(first_exe, exe);
+
+        default:
+          wait(NULL);
+        }
+        // execvp(first_exe, exe);
+        if (temp == cn_semi)
+        {
+          exit(1);
+        }
+      }
+      break;
+    }
+    default:
+      if (back)
+      {
+
+        printf("%d\n", getpid());
+        back = 0;
         break;
       }
-      default:
-        if (back)
-        {
 
-          printf("%d\n", getpid());
-          back = 0;
-          break;
-        }
-
-        else
-        {
-          int st, st1;
-          st1 = waitpid(pid, &st, 0);
-          break;
-          // printf("front\n");
-        }
+      else
+      {
+        int st, st1;
+        st1 = waitpid(pid, &st, 0);
+        break;
+        // printf("front\n");
       }
     }
+    //}
   }
 }
 
